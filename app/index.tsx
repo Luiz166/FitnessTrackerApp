@@ -17,9 +17,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
+  
   h1: {
     fontSize: 24,
     fontWeight: "700",
-    marginBottom: 20
+    marginTop: 20
   }
 })
