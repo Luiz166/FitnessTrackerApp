@@ -7,13 +7,13 @@ export default function Login(){
 
     const [email, setEmail] = useState("")
 
-    const emailOnChange = (newText) => {
+    const emailOnChange = (newText : string) => {
         setEmail(newText)
     }
 
     const [password, setPassword] = useState("")
 
-    const passwordOnChange = (newText) => {
+    const passwordOnChange = (newText : string) => {
         setPassword(newText)
     }
 
@@ -30,6 +30,8 @@ export default function Login(){
                 viewStyle={styles.textView} 
                 placeholder={'Digite seu email'}
                 onChangeText={emailOnChange}
+                style={styles.input}
+                placeholderTextColor="#fff"
                 value={email}
                 />
                 <TextField label="senha" 
@@ -37,14 +39,16 @@ export default function Login(){
                 secureTextEntry={true} 
                 viewStyle={styles.textView} 
                 placeholder={'Digite sua senha'}
+                placeholderTextColor="#fff"
                 onChangeText={passwordOnChange}
+                style={styles.input}
                 value={password}
                 />
                 <Pressable onPress={buttonOnClick} style={styles.button}>
                     <Text style={styles.buttonText}>Logar</Text>
                 </Pressable>
                 <View style={styles.footer}>
-                    <Text>Não tem uma conta?</Text>
+                    <Text style={styles.footerSpan}>Não tem uma conta?</Text>
                     <Pressable>
                         <Link href="/screens/register" style={styles.link}>Cadastrar</Link>
                     </Pressable>
@@ -58,17 +62,22 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        backgroundColor: "#232323"
     },
     loginContainer: {
         height: "50%",
         width: "80%"
+    },
+    input: {
+        color: "white",
     },
     title: {
         fontSize: 24,
         fontWeight: "700",
         letterSpacing: 2,
         textTransform: "uppercase",
+        color: "white"
     },
     label: {
         fontSize: 12,
@@ -83,7 +92,7 @@ const styles = StyleSheet.create({
     button: {
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#F974D2",
+        backgroundColor: "#896CFE",
         padding: 10,
         borderRadius: 10,
         marginTop: 20
@@ -100,10 +109,13 @@ const styles = StyleSheet.create({
         width: "95%",
         marginTop: 10
     },
+    footerSpan: {
+        color: "white"
+    },
     link: {
         textDecorationStyle: "solid",
         textDecorationLine: "underline",
-        color: "#3d90c4",
+        color: "#E2F163",
         fontWeight: "600"
     }
 })
