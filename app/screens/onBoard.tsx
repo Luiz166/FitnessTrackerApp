@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import { Text, View, StyleSheet, Image, Pressable } from "react-native";
+import { Text, View, StyleSheet, Image, Pressable, ImageBackground } from "react-native";
 
 export default function OnBoard(){
 
@@ -8,8 +8,12 @@ export default function OnBoard(){
     }
 
     return(
+        <ImageBackground
+        source={require("@/assets/images/man-training.png")}
+        resizeMode="stretch"
+        style={styles.img}
+        >
         <View style={styles.container}>
-            <Image style={styles.img} source={require("@/assets/images/man-training.png")}/>
             <View style={styles.purpleContainer}>
                 <Text style={styles.h1}>Comece sua jornada fitness agora.</Text>
             </View>
@@ -17,6 +21,7 @@ export default function OnBoard(){
                 <Text style={styles.buttonText}>Comecar</Text>
             </Pressable>
         </View>
+        </ImageBackground>
     )
 }
 
@@ -40,7 +45,9 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
     img: {
-        position: "absolute",
+        flex: 1,
+        width: "100%",
+        height: "100%",
     },
     button: {
         marginTop: 30,
