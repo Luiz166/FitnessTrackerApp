@@ -2,9 +2,15 @@ import { View, Text, StyleSheet, Pressable} from "react-native";
 import TextField from "../components/TextField";
 import { useState } from "react";
 import { Link } from "expo-router";
+import axios from "axios"
 
 export default function Register(){
     const [email, setEmail] = useState("")
+    const [name, setName] = useState("")
+
+    const nameOnChange = (newText: string) => {
+        setName(newText)
+    }
 
     const emailOnChange = (newText : string) => {
         setEmail(newText)
@@ -16,14 +22,35 @@ export default function Register(){
         setPassword(newText)
     }
 
-    const buttonOnClick = () => {
-        alert(`email: ${email}, password: ${password}`)
+    const createUser = async () => {
+        if(email != "" && password != ""){
+            try{
+                const res = await axios.post("http://192.168.0.11:8800/user/register", {
+                    name: name,
+                    email: email,
+                    password: password
+                })
+
+                alert(res.data.message)
+            }catch(err){
+                console.log(err)
+            }
+        }
     }
 
     return(
         <View style={styles.container}>
             <View style={styles.loginContainer}>
                 <Text style={styles.title}>Criar conta</Text>
+                <TextField label="nome" 
+                labelStyle={styles.label} 
+                viewStyle={styles.textView} 
+                placeholder={'Digite seu nome completo'}
+                placeholderTextColor="#fff"
+                onChangeText={nameOnChange}
+                style={styles.input}
+                value={name}
+                />
                 <TextField label="email" 
                 labelStyle={styles.label} 
                 viewStyle={styles.textView} 
@@ -43,7 +70,7 @@ export default function Register(){
                 style={styles.input}
                 value={password}
                 />
-                <Pressable onPress={buttonOnClick} style={styles.button}>
+                <Pressable onPress={createUser} style={styles.button}>
                     <Text style={styles.buttonText}>Cadastrar</Text>
                 </Pressable>
                 <View style={styles.footer}>
