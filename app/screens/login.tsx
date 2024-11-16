@@ -1,7 +1,8 @@
-import { View, Text, StyleSheet, Pressable} from "react-native";
+import { View, Text, StyleSheet, Pressable, Alert} from "react-native";
 import TextField from "../components/TextField";
 import { useState } from "react";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
+import axios from "axios";
 
 export default function Login(){
 
@@ -17,8 +18,21 @@ export default function Login(){
         setPassword(newText)
     }
 
-    const buttonOnClick = () => {
-        alert(`email: ${email}, password: ${password}`)
+    const loginButton = async () => {
+        if(!email || !password){
+            Alert.alert("Erro", "Preencha todos os campos")
+        }else{
+            try{
+                const res = await axios.post("http://192.168.0.11:8800/user/login", {
+                    email: email,
+                    password: password
+                })
+
+                router.push("/setup/finishRegister")
+            }catch(err){
+                Alert.alert("Erro", `${err}`)
+            }
+        }
     }
 
     return(
@@ -44,7 +58,7 @@ export default function Login(){
                 style={styles.input}
                 value={password}
                 />
-                <Pressable onPress={buttonOnClick} style={styles.button}>
+                <Pressable onPress={loginButton} style={styles.button}>
                     <Text style={styles.buttonText}>Logar</Text>
                 </Pressable>
                 <View style={styles.footer}>
