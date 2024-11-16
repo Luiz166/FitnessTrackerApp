@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Pressable} from "react-native";
 import TextField from "../components/TextField";
 import { useState } from "react";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import axios from "axios"
 
 export default function Register(){
@@ -32,6 +32,7 @@ export default function Register(){
                 })
 
                 alert(res.data.message)
+                router.push("/screens/login")
             }catch(err){
                 console.log(err)
             }
