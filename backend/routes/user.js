@@ -43,4 +43,17 @@ router.post('/login', (req, res) => {
     })
 })
 
+router.put('/:id', (req, res) => {
+    const {userId} = req.params;
+    const { weight, height } = req.body;
+    const query = 'UPDATE users SET weight = ?, height = ? WHERE id = ?'
+    database.query(query, [weight, height, userId], (err) => {
+        if(err){
+            console.error("Erro ao atualizar usuario: ", err)
+            return res.status(500).json({message: "Erro ao atualizar usuario"})
+        }
+        res.status(200).json({message: 'Usuario atualizado com sucesso'});
+    })
+})
+
 export default router;
