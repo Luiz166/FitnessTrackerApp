@@ -3,6 +3,7 @@ import TextField from "../components/TextField";
 import { useState } from "react";
 import { Link, router } from "expo-router";
 import axios from "axios";
+import { getToken, saveToken } from "../auth/AuthProvider";
 
 export default function Login(){
 
@@ -27,6 +28,10 @@ export default function Login(){
                     email: email,
                     password: password
                 })
+                //console.log(res)
+                const token = res.data.results[0].id;
+                const tokenString = String(token)
+                await saveToken(tokenString)
                 Alert.alert("Sucesso", `${res.data.message}`)
                 router.push("/setup/finishRegister")
             }catch(err){
