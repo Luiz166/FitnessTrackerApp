@@ -38,7 +38,7 @@ router.post('/login', (req, res) => {
             const user = results[0]
             const isPasswordValid = await bcrypt.compare(password, user.password);
             if(!isPasswordValid) return res.status(400).json({message: "Senha invalida"})
-            return res.status(200).json({message: "Logado com sucesso"})
+            return res.status(200).json({message: 'Logado com sucesso', results})
         }
     })
 })
