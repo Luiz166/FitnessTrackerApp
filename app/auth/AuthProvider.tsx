@@ -10,7 +10,13 @@ export async function saveToken(token: string){
 }
 
 export async function getToken() {
-    return await SecureStore.getItemAsync('userToken');
+    try{
+        const token = await SecureStore.getItemAsync('userToken');
+        console.log('token:', token )
+        return token
+    }catch(err){
+        console.error("Error retrieving token: ", err)
+    }
 }
 
 export async function deleteToken() {
