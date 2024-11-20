@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { View, StyleSheet, Text, Button, Pressable } from "react-native";
+import { View, StyleSheet, Text, Button, Pressable, Alert } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import TextField from "../components/TextField";
+import { getToken } from "../auth/AuthProvider";
+import axios from "axios";
 
 export default function finishRegister(){
 
-    const [localChecked, setLocalChecked] = useState(false); // true = female false = male
+    const [localChecked, setLocalChecked] = useState(false); // false = female true = male
     const [height, setHeight] = useState("")
     const [weight, setWeight] = useState("")
 
@@ -15,6 +17,24 @@ export default function finishRegister(){
 
     const weightOnChange = (newText : string) => {
         setWeight(newText)
+    }
+
+    const handleForm = async () => {
+        const id = await getToken()
+        const gender = localChecked? "male" : "female"
+        const weightFormatted = parseFloat(weight)
+        const heightFormatted = parseInt(height)
+        try{
+            const res = await axios.put(`http://192.168.0.11:8800/user${id}`, {
+                weight: weightFormatted,
+                height: heightFormatted,
+                gender: gender
+            })
+
+            Alert.alert("Sucesso", `${res.data.message}`)
+        }catch(error){
+            console.error("erro ao autalizar: ", error)
+        }
     }
 
     return(
@@ -54,7 +74,7 @@ export default function finishRegister(){
                         value={height}
                         />
                 </View>
-                <Pressable style={styles.button}>
+                <Pressable style={styles.button} onPress={handleForm}>
                     <Text style={styles.buttonText}>Continuar</Text>
                 </Pressable>
             </View>
