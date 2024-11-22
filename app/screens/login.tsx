@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable, Alert, StatusBar} from "react-native";
+import { View, Text, StyleSheet, Pressable, Alert} from "react-native";
 import TextField from "../components/TextField";
 import { useState } from "react";
 import { Link, router } from "expo-router";
@@ -30,10 +30,16 @@ export default function Login(){
                 })
                 //console.log(res)
                 const token = res.data.results[0].id;
+                const username = res.data.results[0].name
                 const tokenString = String(token)
-                await saveToken(tokenString)
+                await saveToken(tokenString, username)
                 Alert.alert("Sucesso", `${res.data.message}`)
-                router.push("/setup/finishRegister")
+                if(res.data.results[0].gender == null){
+                    router.push('/setup/finishRegister')
+                }else{
+                    router.push('/main/home')
+                }
+                
             }catch(err){
                 Alert.alert("Erro", `${err}`)
             }
@@ -42,7 +48,6 @@ export default function Login(){
 
     return(
         <View style={styles.container}>
-            <StatusBar backgroundColor={"#232323"}/>
             <View style={styles.loginContainer}>
                 <Text style={styles.title}>Login</Text>
                 <TextField label="email" 
